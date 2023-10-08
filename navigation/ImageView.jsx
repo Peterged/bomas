@@ -20,7 +20,7 @@ import { useFonts } from 'expo-font';
 import * as FileSystem from 'expo-file-system';
 import { Color } from '~/assets/styles/Style.js';
 import { StatusBar } from 'expo-status-bar';
-import Images from '../../assets/data//image.json';
+import Images from '~/assets/data/image.json';
 const deleteButton = require('~/assets/images/icons/DeleteButtonImage.png');
 const editButton = require('~/assets/images/icons/EditButtonImage.png');
 const shareButton = require('~/assets/images/icons/ShareButtonImage.png');
@@ -32,7 +32,7 @@ const starOutline = require('~/assets/images/icons/StarOutlineButton.png');
 SplashScreen.preventAutoHideAsync();
 const win = Dimensions.get('window');
 
-export default function ImageView ({ navigation }) {
+export default function ImageView () {
     const route = useRoute();
 
     const shareInitiate = () => {
@@ -59,7 +59,9 @@ export default function ImageView ({ navigation }) {
         <View style={styles.container}>
             {/* Title and Favorite Button */}
             <View style={styles.navigationTop}>
-                <TouchableOpacity onPress={navigation.goBack()}>
+                <TouchableOpacity 
+                // onPress={navigation.goBack()}
+                >
                     <View styles={styles.buttonGroup}>
                         <Image source={arrowBack} alt={`return_button`}/>
                         <Text style={styles.buttonText}></Text>

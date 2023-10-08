@@ -20,7 +20,9 @@ import { NavigationContainer } from '@react-navigation/native';
 export default function Favorites ({ navigation }) {
     return (
         <NavigationContainer>
-            <View style={header}></View>
+            <View style={header}>
+                <Text>Test</Text>
+            </View>
 
             <StatusBar style='auto' />
         </NavigationContainer>
@@ -28,7 +30,7 @@ export default function Favorites ({ navigation }) {
 }
 
 
-const styles = StyleSheet({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
     },

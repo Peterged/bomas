@@ -8,33 +8,36 @@ import { registerRootComponent } from "expo";
 const Stack = createNativeStackNavigator();
 
 // Components
-import Home from "~/components/template/Home";
-import Gallery from '~/components/template/Gallery';
-import ImageView from '~/components/template/ImageView';
+import Home from "./navigation/Home";
+import Gallery from "./navigation/Gallery";
+import ImageView from "./navigation/ImageView";
+import Favorites from './src/util/Favorites'
 
 // Utility
 import checkImagesInFolder from "./src/util/checkImagesInFolder";
-import createFolder from './src/util/createFolder';
+import createFolder from "./src/util/createFolder";
 import { AppRegistry } from "react-native";
+
+// REGISTER COMPONENTS
+
 
 export default function App() {
   const [isThereImages, setIsThereImages] = useState(true);
-  const navigation = useNavigation();
+//   const navigation = useNavigation();
 
   const checkIfImagesInFolderAsync = async () => {
-    const imageFiles = await checkImagesInFolder('assets/images');
+    const imageFiles = await checkImagesInFolder("assets/images");
     setIsThereImages(imageFiles?.length > 0);
   };
 
   const createFolderForStorage = async () => {
-    await createFolder('assets/images');
-  }
+    await createFolder("assets/images");
+  };
 
   useEffect(() => {
     // createFolderForStorage();
     checkIfImagesInFolderAsync();
   }, []);
-
 
   const renderStackScreen = () => {
     if (!isThereImages) {
@@ -43,7 +46,7 @@ export default function App() {
           name="gallery"
           component={Gallery}
           options={{ headerShown: false }}
-          navigationKey={navigation}
+          
         ></Stack.Screen>
       );
     } else {
@@ -52,7 +55,7 @@ export default function App() {
           name="home"
           component={Home}
           options={{ headerShown: false }}
-          navigationKey={navigation}
+          
         ></Stack.Screen>
       );
     }
@@ -73,10 +76,10 @@ export default function App() {
 }
 
 registerRootComponent(App);
-AppRegistry.registerComponent('Home', () => Home);
-AppRegistry.registerComponent('Gallery', () => Gallery);
-AppRegistry.registerComponent('ImageView', () => ImageView);
-
+AppRegistry.registerComponent("Home", () => Home);
+AppRegistry.registerComponent("Gallery", () => Gallery);
+AppRegistry.registerComponent("ImageView", () => ImageView);
+AppRegistry.registerComponent("Favorites", () => Favorites);
 
 // import RNFS from 'react-native-fs';
 // import React, { useState } from 'react';

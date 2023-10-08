@@ -9,6 +9,7 @@ import {
   Alert,
   TouchableWithoutFeedback,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { Color } from "~/assets/styles/Style.js";
 import { StatusBar } from "expo-status-bar";
