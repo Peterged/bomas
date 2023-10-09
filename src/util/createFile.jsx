@@ -7,6 +7,8 @@ const createFile = async (path, fileName, data = '') => {
     const filePath = `${documentDirectory}${path}/${fileName}`;
 
     await FileSystem.writeAsStringAsync(filePath, data);
+
+    console.log(`File (${filePath}) created!`);
 }
 
 export default createFile;

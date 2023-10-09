@@ -93,24 +93,25 @@ export default function Gallery({ navigation }) {
 
     return (
         <View style={styles.container} onLayout={handleOnLayout}>
+
+
             <View style={styles.navigationBar}>
                 <View style={styles.circle}></View>
                 <Text style={{ fontSize: 22, fontFamily: "montserrat-bold" }}>
                     HISTORY
                 </Text>
-
                 <Touchable onPress={() => navigation.navigate('information')}>
                     <Image source={InfoImage} alt="Info" style={styles.iconImage} />
                 </Touchable>
             </View>
+
+
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={7}
                 bounces={false}
                 scrollEnabled={true}
             >
-                {/* {new SlidePanel().render()} */}
-
                 <Text style={{ fontSize: 24, fontFamily: "montserrat-medium" }}>
                     Hari Ini
                 </Text>
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
         backgroundColor: Color.black,
         borderRadius: 16,
     },
-    navigationBar: {    
+    navigationBar: {
         flex: 0,
         justifyContent: "space-between",
         alignItems: "center",

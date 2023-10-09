@@ -9,14 +9,16 @@ const createFolder = async (name) => {
     try {
         nameArr.forEach(async (folderName) => {
             pathIncrementName += folderName;
+            
             await FileSystem.getInfoAsync(documentDirectory + pathIncrementName)
             .then(async (fileUri) => {
                 if(!fileUri.exists){
+                    console.log('runned')
                     await FileSystem.makeDirectoryAsync(documentDirectory + pathIncrementName, {
                         intermediates: true
                     })
                     .then(async n => {
-                        // console.log(n);
+                        console.log(documentDirectory + pathIncrementName + ' Created!');
                         // FileSystem.getInfoAsync(documentDirectory + pathIncrementName);
                     })
                 }

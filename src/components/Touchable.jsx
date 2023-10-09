@@ -10,7 +10,7 @@ import {
     Dimensions
 } from 'react-native';
 
-export default function Touchable({ ref, style, onPress, children, isHitSlop = false }) {
+export default function Touchable({ ref, style, onPress, isHitSlop = false, children }) {
     if(typeof(isHitSlop) != 'boolean'){
         throw new RangeError('isHitSlop must be a boolean [true | false]');
     }
@@ -19,11 +19,14 @@ export default function Touchable({ ref, style, onPress, children, isHitSlop = f
             hitSlop={isHitSlop ? {top: 20, bottom: 20, left: 20, right: 20} : {}}
             // hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
             onPress={onPress}
-            children={children}
+           
             style={style}
             ref={ref}
         >
-            {children}
+            
+            <View style={style}>
+             {children}
+            </View>
         </TouchableWithoutFeedback>
     );
 }
