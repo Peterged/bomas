@@ -42,6 +42,7 @@ export default function ImageView () {
     // console.log(Object.values(route.params).at(0));
 
     const shareInitiate = async () => {
+
         const file = await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + new Date().toJSON(), imageURI, { encoding: 'base64' });
 
         const result = await Share.shareAsync({
