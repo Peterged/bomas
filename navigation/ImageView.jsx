@@ -62,7 +62,7 @@ export default function ImageView() {
         const fileUri = await createNonTextFile('assets/images', new Date().toJSON() + '.jpeg', imageURI, 'base64');
 
         Share.shareAsync(fileUri);
-        
+
 
 
         console.log('share success!');
@@ -130,9 +130,8 @@ const styles = StyleSheet.create({
     },
     mainImage: {
         flex: 1,
-        width: win.width,
+        width: '100%',
         resizeMode: 'cover',
-        maxWidth: win.width,
         height: 'auto',
     },
     linearNavigationTop: {
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignContent: "center",
         flexDirection: 'row',
-        
+
         padding: 15,
         zIndex: 1000
     },

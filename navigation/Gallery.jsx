@@ -96,7 +96,10 @@ export default function Gallery({ navigation }) {
 
 
             <View style={styles.navigationBar}>
-                <View style={styles.circle}></View>
+
+                <Touchable style={styles.circle} onPress={() => navigation.navigate('input_ip')}>
+                
+                </Touchable>
                 <Text style={{ fontSize: 22, fontFamily: "montserrat-bold" }}>
                     HISTORY
                 </Text>

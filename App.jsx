@@ -20,11 +20,13 @@ import createFolder from "./src/util/createFolder";
 import { AppRegistry } from "react-native";
 import createFile from "./src/util/createFile";
 import deleteFile from "./src/util/deleteFile";
+import requestMediaLibraryPermission from "./src/util/requestMediaLibrary";
 
 
 // Data
 import Images from './src/assets/data/image.json';
 import getFilesFromMedia from "./src/util/GetImagesFromMedia";
+import InputIP from "./navigation/InputIP";
 
 
 export default function App() {
@@ -47,8 +49,11 @@ export default function App() {
   useEffect(() => {
     // createFile('assets/images', 'images.json', JSON.stringify(Images));
     // createFolder('assets/images');
-    getFilesFromMedia();
-    getFilesFromFolder('assets/images');
+    requestMediaLibraryPermission().then(() => {
+      getFilesFromMedia();
+      getFilesFromFolder('assets/images');
+    });
+
   }, []);
 
   const renderStackScreen = () => {
@@ -86,6 +91,13 @@ export default function App() {
           component={ImageView}
           options={{headerTitle: 'Edit', headerShown: false }}
         ></Stack.Screen>
+
+        <Stack.Screen
+          name="input_ip"
+          component={InputIP}
+          options={{ headerTitle: 'Input your IP' }}
+        >
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -94,5 +106,6 @@ export default function App() {
 registerRootComponent(App);
 AppRegistry.registerComponent("Home", () => Home);
 AppRegistry.registerComponent("Gallery", () => Gallery);
-// AppRegistry.registerComponent("ImageView", () => ImageView);
+AppRegistry.registerComponent("ImageView", () => ImageView);
+AppRegistry.registerComponent("ImageView", () => InputIP);
 // AppRegistry.registerComponent("Favorites", () => Favorites);
