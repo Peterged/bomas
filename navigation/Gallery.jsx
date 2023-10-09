@@ -12,8 +12,6 @@ import {
     Text,
     Alert,
     useWindowDimensions,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
     Button,
 } from "react-native";
 
@@ -21,7 +19,6 @@ import { useFonts } from "expo-font";
 import { useCallback } from "react";
 import { Color } from "../src/assets/styles/Style.js";
 import { StatusBar } from "expo-status-bar";
-import { useNavigation } from "@react-navigation/native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,11 +27,9 @@ const InfoImage = require("~/assets/images/icons/info_icon.png");
 import Touchable from "../src/components/Touchable.jsx";
 import ImageTouchable from "../src/components/ImageTouchable.jsx";
 import ImageModal from "../src/components/ImageModal.jsx";
+import ImageNavigate from "../src/components/ImageNavigate.jsx";
+const Images = require("../src/assets/data/image.json");
 
-// Get Images in a folder
-// const images = images.sort(
-//   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-// );
 const historyInformation = () => {
     Alert.alert("About History", "1.\n2.", [
         {
@@ -43,9 +38,6 @@ const historyInformation = () => {
         },
     ]);
 };
-
-// const ImageTo = require('~/assets/data/image.json');
-const Images = require("../src/assets/data/image.json");
 
 class SlidePanel extends React.Component {
     render() {
@@ -63,7 +55,7 @@ class SlidePanel extends React.Component {
     }
 }
 
-export default function Gallery() {
+export default function Gallery({ navigation }) {
     const [isLoaded] = useFonts({
         "montserrat-regular": require("~/assets/fonts/Montserrat-Regular.ttf"),
         "montserrat-medium": require("~/assets/fonts/Montserrat-Medium.ttf"),
@@ -76,7 +68,7 @@ export default function Gallery() {
     const [panelPosition, setPanelPosition] = useState(0);
 
     const windowWidth = useWindowDimensions().width - 40;
-    const windowHeight = useWindowDimensions().height - 40;
+    // const windowHeight = useWindowDimensions().height - 40;
     const smallImageSize = Math.floor(windowWidth / 3);
 
     const handleOnLayout = useCallback(async () => {
@@ -87,10 +79,6 @@ export default function Gallery() {
 
     if (!isLoaded) {
         return null;
-    }
-
-    const handleImageModal = () => {
-        
     }
 
     const customStyles = StyleSheet.create({
@@ -111,7 +99,7 @@ export default function Gallery() {
                     HISTORY
                 </Text>
 
-                <Touchable>
+                <Touchable onPress={() => navigation.navigate('information')}>
                     <Image source={InfoImage} alt="Info" style={styles.iconImage} />
                 </Touchable>
             </View>
@@ -121,7 +109,7 @@ export default function Gallery() {
                 bounces={false}
                 scrollEnabled={true}
             >
-                {new SlidePanel().render()}
+                {/* {new SlidePanel().render()} */}
 
                 <Text style={{ fontSize: 24, fontFamily: "montserrat-medium" }}>
                     Hari Ini
@@ -138,8 +126,10 @@ export default function Gallery() {
                     bounces={false}
                     scrollEnabled={true}
                 >
-                    <ImageTouchable source={Images.image1} style={styles.recentImage} />
+                    {/* <ImageTouchable source={Images.image1} style={styles.recentImage} /> */}
                     <ImageModal source={Images.image1} />
+
+                    <ImageNavigate source={Images.image1} style={styles.recentImage} targetPage={`image_view`} alt={`phone`} />
 
                     <Touchable>
                         <View style={styles.recentImage}>
@@ -147,8 +137,8 @@ export default function Gallery() {
                         </View>
                     </Touchable>
 
-                    
-                    
+
+
                     <View style={styles.recentImage}></View>
                     <View style={styles.recentImage}></View>
                     <View style={styles.recentImage}></View>
@@ -171,7 +161,7 @@ export default function Gallery() {
                 >
                     <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
                         <ImageTouchable onPress={historyInformation} style={customStyles.smallImage} source={Images.image1} key={Images.image1} />
-                        
+
                         <View style={customStyles.smallImage}></View>
                         <View style={customStyles.smallImage}></View>
                         <View style={customStyles.smallImage}></View>
@@ -214,7 +204,7 @@ const styles = StyleSheet.create({
         backgroundColor: Color.black,
         borderRadius: 16,
     },
-    navigationBar: {
+    navigationBar: {    
         flex: 0,
         justifyContent: "space-between",
         alignItems: "center",

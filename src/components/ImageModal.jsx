@@ -5,7 +5,8 @@ import {
     Image,
     StyleSheet,
     Button,
-    Modal
+    Modal,
+    FlatList
 } from 'react-native';
 
 import { Color } from "~/assets/styles/Style.js";

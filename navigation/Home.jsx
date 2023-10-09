@@ -13,13 +13,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { Color } from "~/assets/styles/Style.js";
 import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
 
 SplashScreen.preventAutoHideAsync();
 
 // Images
 const ConfusedPerson = require("~/assets/images/system/ConfusedPerson.png");
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [isLoaded] = useFonts({
     "montserrat-regular": require("~/assets/fonts/Montserrat-Regular.ttf"),
     "montserrat-medium": require("~/assets/fonts/Montserrat-Medium.ttf"),
@@ -40,26 +41,23 @@ export default function Home() {
     Alert.alert("Feature Unavailable", "coming soon.", [
       {
         text: "I Understand",
-        onPress: () => {},
+        onPress: () => { },
       },
     ]);
 
   return (
-    <SafeAreaView>
-      <View style={styles.container} onLayout={handleOnLayout}>
-        <Image
-          source={ConfusedPerson}
-          style={styles.images}
-          aria-label="confused person"
-        />
-        <Text style={styles.warningText}>Images not found!</Text>
-        <TouchableWithoutFeedback onPress={() => alertComingSoon()}>
-          <Text style={styles.primary}>Learn More</Text>
-        </TouchableWithoutFeedback>
+    <SafeAreaView style={styles.container} onLayout={handleOnLayout}>
+      <Image
+        source={ConfusedPerson}
+        style={styles.images}
+        aria-label="confused person"
+      />
+      <Text style={styles.warningText}>Images not found!</Text>
+      <TouchableWithoutFeedback onPress={() => alertComingSoon()}>
+        <Text style={styles.primary}>Learn More</Text>
+      </TouchableWithoutFeedback>
 
-        <StatusBar style="auto" />
-      </View>
-
+      <StatusBar style="auto" />
       <StatusBar style={`auto`} />
     </SafeAreaView>
   );

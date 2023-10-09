@@ -12,9 +12,10 @@ import {
     StyleSheet,
     Alert,
     Dimensions,
-    ImageBackground,
-    Share
+    ImageBackground
 } from 'react-native';
+
+import Share from 'expo-sharing';
 
 import { useFonts } from 'expo-font';
 import * as FileSystem from 'expo-file-system';
@@ -35,61 +36,62 @@ const win = Dimensions.get('window');
 export default function ImageView () {
     const route = useRoute();
 
-    const shareInitiate = () => {
-        const imageUri = '~/assets/images/duotone.png';
+    const imageURI = Object.values(route.params).at(0);
+    console.log(typeof Object.values(route.params));
 
-        const handleShare = async () => {
-            const options = {
-                url: imageUri
-            }
-        }
+    // console.log(Object.values(route.params).at(0));
 
-        try {
-            (async () => {
-                await Share.open(options);
-            })();
-        } catch (error) {
-            console.log(error);
+    const shareInitiate = async () => {
+        const file = await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + new Date().toJSON(), imageURI, { encoding: 'base64' });
+
+        const result = await Share.shareAsync({
+            type: 'image',
+            data: file.uri,
+        })
+
+        if(result.action === 'sharedAction'){
+            console.log('The image was shared successfuly');
+        } else {
+            console.log('Failed to share image');
         }
     }
-
-
 
     return (
         <View style={styles.container}>
             {/* Title and Favorite Button */}
             <View style={styles.navigationTop}>
-                <TouchableOpacity 
-                // onPress={navigation.goBack()}
+                <TouchableOpacity
+                    // onPress={navigation.goBack()}
                 >
                     <View styles={styles.buttonGroup}>
-                        <Image source={arrowBack} alt={`return_button`}/>
+                        <Image style={styles.buttonGroupImage} source={arrowBack} alt={`return_button`}/>
                         <Text style={styles.buttonText}></Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={favoriteImage}>
-                    <Image source={starOutline} style={buttonGroupImage} />
+                {/* <TouchableOpacity onPress={favoriteImage}> */}
+                <TouchableOpacity>
+                    <Image source={starOutline} style={styles.buttonGroupImage} />
                 </TouchableOpacity>
             </View>
-            <ImageBackground imageStyle={styles.mainImage} source={Images.image1} alt={`BackgroundImage`}>
+            <ImageBackground imageStyle={styles.mainImage} alt={`BackgroundImage`}>
 
             </ImageBackground>
 
-            <View style={{}}>
-                <TouchableOpacity style={buttonGroup} onPress={shareInitiate}>
-                    <Text style={buttonText}>Share</Text>
-                    <Image source={shareButton} style={buttonGroupImage} />
+            <View style={styles.navigationTop}>
+                <TouchableOpacity style={styles.buttonGroup} onPress={shareInitiate}>
+                    <Text style={styles.buttonText}>Share</Text>
+                    <Image source={shareButton} style={styles.buttonGroupImage} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={buttonGroup}>
-                    <Text style={buttonText}>Edit</Text>
-                    <Image source={editButton} style={buttonGroupImage} />
+                <TouchableOpacity style={styles.buttonGroup}>
+                    <Text style={styles.buttonText}>Edit</Text>
+                    <Image source={editButton} style={styles.buttonGroupImage} width={40} height={40} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={buttonGroup}>
-                    <Text style={buttonText}>Delete</Text>
-                    <Image source={deleteButton} style={buttonGroupImage} />
+                <TouchableOpacity style={styles.buttonGroup}>
+                    <Text style={styles.buttonText}>Delete</Text>
                 </TouchableOpacity>
+                    <Image source={deleteButton} style={styles.buttonGroupImage} />
             </View>
 
             {/* Share, Edit and Delete Button  */}
@@ -102,32 +104,40 @@ export default function ImageView () {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Color.black,
+        // backgroundColor: Color.black,
+        margin: 0,
         marginTop: 50,
         alignItems: "center",
         justifyContent: "center"
     },
     mainImage: {
         flex: 1,
-        width: Dimensions.get('window').width,
-        height: 'auto',
+        width: 500,
+        resizeMode: 'cover',
+        height: 500,
     },
     navigationTop: {
         flex: 1,
         justifyContent: "space-between",
-        alignContent: "center"
+        alignContent: "center",
+        flexDirection: 'column',
+        width: 500,
+        height: 500
     },
     buttonGroup: {
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 5
+        gap: 5,
+        width: 'auto',
+        height: 'auto'
     },
     buttonGroupImage: {
         flex: 1,
         width: 24,
-        height: 24
+        height: 24,
+        resizeMode: 'cover',
     },
     buttonText: {
         flex: 1,

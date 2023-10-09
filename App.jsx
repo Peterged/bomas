@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 // Router
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
 const Stack = createNativeStackNavigator();
@@ -11,19 +10,23 @@ const Stack = createNativeStackNavigator();
 import Home from "./navigation/Home";
 import Gallery from "./navigation/Gallery";
 import ImageView from "./navigation/ImageView";
-import Favorites from './src/util/Favorites'
+import Information from "./navigation/Information";
+import Favorites from './src/util/Favorites';
 
 // Utility
 import checkImagesInFolder from "./src/util/checkImagesInFolder";
+import getImagesFromFolder from "./src/util/GetImagesFromFolder";
 import createFolder from "./src/util/createFolder";
 import { AppRegistry } from "react-native";
+import createFile from "./src/util/createFile";
+import deleteFile from "./src/util/deleteFile";
+
 
 // REGISTER COMPONENTS
 
 
 export default function App() {
   const [isThereImages, setIsThereImages] = useState(true);
-//   const navigation = useNavigation();
 
   const checkIfImagesInFolderAsync = async () => {
     const imageFiles = await checkImagesInFolder("assets/images");
@@ -34,19 +37,28 @@ export default function App() {
     await createFolder("assets/images");
   };
 
+  const settings = {
+    "ip": "",
+    "autoConnect": "true",
+    "storageLocation": "assets/image",
+    "image_quality": 90,
+    "image_format": "jpeg",
+    "image_size": [640, 480]
+  };
+
   useEffect(() => {
-    // createFolderForStorage();
-    checkIfImagesInFolderAsync();
+    // createFile('assets/images', 'settings.json', JSON.stringify(settings));
+    getImagesFromFolder('assets/images');
   }, []);
 
   const renderStackScreen = () => {
-    if (!isThereImages) {
+    if (isThereImages) {
       return (
         <Stack.Screen
           name="gallery"
           component={Gallery}
           options={{ headerShown: false }}
-          
+
         ></Stack.Screen>
       );
     } else {
@@ -55,7 +67,6 @@ export default function App() {
           name="home"
           component={Home}
           options={{ headerShown: false }}
-          
         ></Stack.Screen>
       );
     }
@@ -65,11 +76,16 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {renderStackScreen()}
-        {/* <Stack.Screen
-          name="gallery"
-          component={Gallery}
-          options={{ headerShown: false }}
-        ></Stack.Screen> */}
+        <Stack.Screen
+          name="information"
+          component={Information}
+          options={{headerTitle: 'Information'}}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="image_view"
+          component={ImageView}
+          options={{headerTitle: 'ImageInformation'}}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -78,29 +94,5 @@ export default function App() {
 registerRootComponent(App);
 AppRegistry.registerComponent("Home", () => Home);
 AppRegistry.registerComponent("Gallery", () => Gallery);
-AppRegistry.registerComponent("ImageView", () => ImageView);
-AppRegistry.registerComponent("Favorites", () => Favorites);
-
-// import RNFS from 'react-native-fs';
-// import React, { useState } from 'react';
-// import { Image } from 'react-native';
-
-// const DisplayImageFromMyFolder = () => {
-//   const [imageSource, setImageSource] = useState(null);
-
-//   const readImageFromMyFolder = async () => {
-//     const myFolderPath = `${RNFS.DocumentDirectoryPath}/my-folder`;
-//     const imagePath = `${myFolderPath}/image.jpg`;
-
-//     const imageData = await RNFS.readFile(imagePath);
-
-//     setImageSource('data:image/jpeg;base64,' + imageData);
-//   };
-
-//   return (
-//     <Image
-//       source={{ uri: imageSource }}
-//       style={{ width: 200, height: 200 }}
-//     />
-//   );
-// };
+// AppRegistry.registerComponent("ImageView", () => ImageView);
+// AppRegistry.registerComponent("Favorites", () => Favorites);
