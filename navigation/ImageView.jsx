@@ -51,27 +51,21 @@ export default function ImageView() {
 
     const imageURI = Object.values(route.params.params).at(0);
 
-    // "params": {"params": {"image": "test1"}}
-    // console.log(Object.values(route.params.params)[0]);
-
     const shareInitiate = async () => {
         // const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
         // if (status !== 'granted') {
         //     alert('Please accept to continue');
         // }
+
         const fileUri = await createNonTextFile('assets/images', new Date().toJSON() + '.jpeg', imageURI, 'base64');
-
         Share.shareAsync(fileUri);
-
-
-
         console.log('share success!');
     }
 
     return (
         <SafeAreaProvider style={styles.container}>
             {/* Title and Favorite Button */}
-            <LinearGradient colors={['#0000008C', '#00000000']} style={styles.linearNavigationTop}>
+            <LinearGradient colors={['#000000C5', '#00000000']} style={styles.linearNavigationTop}>
                 <View style={styles.navigationTop}>
                     <Touchable
                         onPress={() => navigation.goBack()}
@@ -94,7 +88,7 @@ export default function ImageView() {
             </ImageBackground> */}
             <Image style={styles.mainImage} source={{ uri: imageURI }} alt={`BackgroundImage`} />
 
-            <LinearGradient colors={['#00000000', '#0000008C']} style={styles.linearNavigationBottom}>
+            <LinearGradient colors={['#00000000', '#000000C5']} style={styles.linearNavigationBottom}>
                 <View style={styles.navigationBottom}>
                     <Touchable style={styles.buttonGroup} onPress={shareInitiate}>
                         <Image source={shareButton} style={styles.buttonGroupImage} />
@@ -131,7 +125,7 @@ const styles = StyleSheet.create({
     mainImage: {
         flex: 1,
         width: '100%',
-        resizeMode: 'cover',
+        resizeMode: 'contain',
         height: 'auto',
     },
     linearNavigationTop: {

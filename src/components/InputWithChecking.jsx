@@ -1,41 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, Button, View } from 'react-native';
+import { TextInput, Button, View, Text, Pressable } from 'react-native';
 import Touchable from './Touchable';
+import { useNavigation } from '@react-navigation/native';
+import { FlashMessage } from 'react-native-flash-message';
 
 
-const InputWithChecking = ({ regularExpression, styleInput, styleButton }) => {
-  const [email, setEmail] = useState('');
+const InputWithChecking = ({ regularExpression, onSubmit, styleInput, styleButton, styleView, buttonText, buttonDisabledStyle = {} }) => {
+  const [regex, setRegex] = useState('');
+  const [disabledStyle, setDisabledStyle] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
+  const navigation = useNavigation();
 
-  const validateEmail = (email) => {
+  const validateRegex = (Regex) => {
     const regex = regularExpression;
-    return regex.test(email);
+    return regex.test(Regex);
   };
 
+
+
   useEffect(() => {
-    setIsDisabled(!validateEmail(email));
-  }, [email]);
+    setIsDisabled(!validateRegex(regex));
+    if(validateRegex(regex)){
+      setDisabledStyle({opacity: 1, backgroundColor: "#3DA5FF"} || buttonDisabledStyle);
+    } else {
+      setDisabledStyle({backgroundColor: "#D5D5D5"} || buttonDisabledStyle);
+    }
+  }, [regex]);
 
   return (
     <View style={{ flex: 1, margin: 0, marginTop: 15 }}>
       <TextInput
-        placeholder="Enter your IP"
-        value={email}
-        onChangeText={(email) => setEmail(email)}
+        placeholder="e.g. 171.123.159.25"
+        value={regex}
+        onChangeText={(regex) => setRegex(regex)}
         style={styleInput}
       />
 
-      {/* <Touchable style={}>
-        <Text style={{ flex: 1, fontSize: 18 }}>Submit</Text>
-      </Touchable> */}
-      <Button
-        title="Submit"
-        disabled={isDisabled}
-        onPress={() => {
-          // Do something with the email address
-        }}
-        style={styleButton}
-      />
+      <Touchable
+          disabled={isDisabled}
+          onPress={() => onSubmit()}
+          style={[styleView, disabledStyle]}
+      >
+        <View disabled={isDisabled}>
+          <Text disabled={isDisabled} style={[styleButton, {opacity: 1}]}>{buttonText}</Text>
+        </View>
+      </Touchable>
+
     </View>
   );
 };

@@ -2,7 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppState } from "react-native";
 
 import {
-    StyleSheet
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,12 +13,25 @@ import InputWithChecking from "../src/components/InputWithChecking";
 
 
 
-export default function InputIP() {
+export default function InputIP({ navigation }) {
+    const saveAndNavigate = (pageName) => {
+        navigation.navigate(pageName);
+    }
+
+
     return (
-        <SafeAreaView style={styles.container}>
-            <InputWithChecking regularExpression={/^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$/} styleInput={styles.inputStyle} styleButton={styles.buttonStyle} />
+        <View style={styles.container}>
+            <Text style={{ fontSize: 16, marginBottom: 5, fontWeight: 'bold' }}>IP Address</Text>
+            <InputWithChecking
+                regularExpression={/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/}
+                styleView={styles.viewStyle}
+                styleInput={styles.inputStyle}
+                styleButton={styles.buttonStyle}
+                buttonText={`SAVE`}
+                onSubmit={() => navigation.navigate('gallery')}
+            />
             <StatusBar style="auto" />
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -24,21 +39,33 @@ export default function InputIP() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 15
+        padding: 15,
+        paddingTop: 25,
+        height: '100%',
+        backgroundColor: 'white'
     },
     inputStyle: {
         backgroundColor: '#EBEDFB',
         borderRadius: 10,
         width: '100%',
         fontSize: 14,
-        padding: 25,
+        padding: 15,
         color: '#808080',
     },
     buttonStyle: {
+        fontWeight: 'bold',
+        color: '#ffffff'
+    },
+    viewStyle: {
+        flex: 1,
         position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
         bottom: 0,
-        margin: 15,
+        padding: 10,
+        paddingHorizontal: 5,
         width: '100%',
-        borderRadius: 100,
+        backgroundColor: '#636363',
+        borderRadius: 100
     }
 })

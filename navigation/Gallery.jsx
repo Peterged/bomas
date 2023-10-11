@@ -28,6 +28,7 @@ import Touchable from "../src/components/Touchable.jsx";
 import ImageTouchable from "../src/components/ImageTouchable.jsx";
 import ImageModal from "../src/components/ImageModal.jsx";
 import ImageNavigate from "../src/components/ImageNavigate.jsx";
+import { getStorage } from "../src/util/storage/saveAsyncStorage.jsx";
 const Images = require("../src/assets/data/image.json");
 
 const historyInformation = () => {
@@ -98,7 +99,7 @@ export default function Gallery({ navigation }) {
             <View style={styles.navigationBar}>
 
                 <Touchable style={styles.circle} onPress={() => navigation.navigate('input_ip')}>
-                
+
                 </Touchable>
                 <Text style={{ fontSize: 22, fontFamily: "montserrat-bold" }}>
                     HISTORY
@@ -183,6 +184,11 @@ export default function Gallery({ navigation }) {
                 </ScrollView>
             </ScrollView>
 
+            <Touchable style={styles.floatingMessage}>
+                    <Text style={{ fontSize: 14, fontWeight: '600'}}>{getStorage('IP')}</Text>
+            </Touchable>
+
+
             <StatusBar style="auto"></StatusBar>
         </View>
     );
@@ -232,4 +238,12 @@ const styles = StyleSheet.create({
     smallGallery: {
         flexWrap: "wrap",
     },
+    floatingMessage: {
+        position: 'absolute',
+        bottom: 0,
+        margin: 15,
+        padding: 15,
+        borderRadius: 15,
+        width: '100%',
+    }
 });
