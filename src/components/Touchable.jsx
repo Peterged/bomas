@@ -1,16 +1,11 @@
 import React from 'react';
-import * as FileSystem from 'expo-file-system';
 
 import {
-    Text,
     View,
-    Image,
-    TouchableWithoutFeedback,
-    StyleSheet,
-    Dimensions
+    TouchableWithoutFeedback
 } from 'react-native';
 
-export default function Touchable({ ref, style, onPress, isHitSlop = false, disabled, children }) {
+export default function Touchable({ style, onPress, isHitSlop = false, disabled, children }) {
     if(typeof(isHitSlop) != 'boolean'){
         throw new RangeError('isHitSlop must be a boolean [true | false]');
     }
@@ -21,11 +16,9 @@ export default function Touchable({ ref, style, onPress, isHitSlop = false, disa
             onPress={onPress}
             disabled={disabled}
             style={style}
-            ref={ref}
         >
-
             <View disabled={disabled} style={style}>
-             {children}
+                {children}
             </View>
         </TouchableWithoutFeedback>
     );

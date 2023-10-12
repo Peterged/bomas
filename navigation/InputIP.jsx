@@ -10,14 +10,15 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import InputWithChecking from "../src/components/InputWithChecking";
+import flashMessage from "../src/util/flashMessages";
 
 
 
 export default function InputIP({ navigation }) {
-    const saveAndNavigate = (pageName) => {
+    const handleSubmit = (pageName) => {
+        flashMessage('Successfully saved your ip!');
         navigation.navigate(pageName);
     }
-
 
     return (
         <View style={styles.container}>

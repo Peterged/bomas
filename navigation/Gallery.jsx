@@ -19,6 +19,7 @@ import { useFonts } from "expo-font";
 import { useCallback } from "react";
 import { Color } from "../src/assets/styles/Style.js";
 import { StatusBar } from "expo-status-bar";
+import flashMessage from "../src/util/flashMessages.jsx";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,21 +41,21 @@ const historyInformation = () => {
     ]);
 };
 
-class SlidePanel extends React.Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Button title="Show panel" onPress={() => this._panel.show()} />
-                <SlidingUpPanel ref={(c) => (this._panel = c)}>
-                    <View style={styles.container}>
-                        <Text>Testing Stuff</Text>
-                        <Button title="Hide" onPress={() => this._panel.hide()} />
-                    </View>
-                </SlidingUpPanel>
-            </View>
-        );
-    }
-}
+// class SlidePanel extends React.Component {
+//     render() {
+//         return (
+//             <View style={styles.container}>
+//                 <Button title="Show panel" onPress={() => this._panel.show()} />
+//                 <SlidingUpPanel ref={(c) => (this._panel = c)}>
+//                     <View style={styles.container}>
+//                         <Text>Testing Stuff</Text>
+//                         <Button title="Hide" onPress={() => this._panel.hide()} />
+//                     </View>
+//                 </SlidingUpPanel>
+//             </View>
+//         );
+//     }
+// }
 
 export default function Gallery({ navigation }) {
     const [isLoaded] = useFonts({
@@ -69,7 +70,6 @@ export default function Gallery({ navigation }) {
     const [panelPosition, setPanelPosition] = useState(0);
 
     const windowWidth = useWindowDimensions().width - 40;
-    // const windowHeight = useWindowDimensions().height - 40;
     const smallImageSize = Math.floor(windowWidth / 3);
 
     const handleOnLayout = useCallback(async () => {
@@ -94,13 +94,8 @@ export default function Gallery({ navigation }) {
 
     return (
         <View style={styles.container} onLayout={handleOnLayout}>
-
-
             <View style={styles.navigationBar}>
-
-                <Touchable style={styles.circle} onPress={() => navigation.navigate('input_ip')}>
-
-                </Touchable>
+                <Touchable style={styles.circle} onPress={() => navigation.navigate('input_ip')}></Touchable>
                 <Text style={{ fontSize: 22, fontFamily: "montserrat-bold" }}>
                     HISTORY
                 </Text>
@@ -132,18 +127,8 @@ export default function Gallery({ navigation }) {
                     scrollEnabled={true}
                 >
                     {/* <ImageTouchable source={Images.image1} style={styles.recentImage} /> */}
-                    <ImageModal source={Images.image1} />
 
                     <ImageNavigate source={Images.image1} style={styles.recentImage} targetPage={`image_view`} alt={`phone`} />
-
-                    <Touchable>
-                        <View style={styles.recentImage}>
-                            <Text>Show Modal</Text>
-                        </View>
-                    </Touchable>
-
-
-
                     <View style={styles.recentImage}></View>
                     <View style={styles.recentImage}></View>
                     <View style={styles.recentImage}></View>
@@ -165,13 +150,7 @@ export default function Gallery({ navigation }) {
                     scrollEnabled={true}
                 >
                     <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-                        <ImageTouchable onPress={historyInformation} style={customStyles.smallImage} source={Images.image1} key={Images.image1} />
-
-                        <View style={customStyles.smallImage}></View>
-                        <View style={customStyles.smallImage}></View>
-                        <View style={customStyles.smallImage}></View>
-                        <View style={customStyles.smallImage}></View>
-                        <View style={customStyles.smallImage}></View>
+                        <ImageTouchable onPress={historyInformation} style={customStyles.smallImage} source={Images.image1} />
                         <View style={customStyles.smallImage}></View>
                         <View style={customStyles.smallImage}></View>
                         <View style={customStyles.smallImage}></View>
@@ -184,9 +163,9 @@ export default function Gallery({ navigation }) {
                 </ScrollView>
             </ScrollView>
 
-            <Touchable style={styles.floatingMessage}>
+            {/* <Touchable style={styles.floatingMessage}>
                     <Text style={{ fontSize: 14, fontWeight: '600'}}>{getStorage('IP')}</Text>
-            </Touchable>
+            </Touchable> */}
 
 
             <StatusBar style="auto"></StatusBar>

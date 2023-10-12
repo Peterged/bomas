@@ -117,8 +117,8 @@ export default function ImageView() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 40
-        // backgroundColor: Color.black,
+        marginTop: 40,
+        backgroundColor: Color.black,
         // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
 
     },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignContent: "center",
         flexDirection: 'row',
-
+        marginTop: 5,
         padding: 15,
         zIndex: 1000
     },
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         flexDirection: 'row',
         padding: 15,
+        marginBottom: 5
     },
     buttonGroup: {
         flex: 1,

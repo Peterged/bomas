@@ -9,8 +9,15 @@ import * as MediaLibrary from 'expo-media-library';
  * @returns {json}
  */
 const getFilesFromMedia = async () => {
-    const assets = await MediaLibrary.getAssetsAsync();
-    console.log(assets);
+    const assets = await MediaLibrary.getAssetsAsync({
+        mediaType: 'photo'
+    });
+
+    assets.assets.forEach(asset => {
+        console.log(asset.uri);
+        console.log('--------------------------------------------------------');
+    })
+    // console.info(JSON.stringify(assets.assets));
 }
 
 export default getFilesFromMedia;

@@ -25,7 +25,7 @@ import requestMediaLibraryPermission from "./src/util/requestMediaLibrary";
 
 // Data
 import Images from './src/assets/data/image.json';
-import getFilesFromMedia from "./src/util/GetImagesFromMedia";
+import getFilesFromMedia from "./src/util/GetFilesFromMedia";
 import InputIP from "./navigation/InputIP";
 
 
@@ -50,7 +50,7 @@ export default function App() {
     // createFile('assets/images', 'images.json', JSON.stringify(Images));
     // createFolder('assets/images');
     requestMediaLibraryPermission().then(() => {
-      getFilesFromMedia();
+      // getFilesFromMedia();
       getFilesFromFolder('assets/images');
     });
 
