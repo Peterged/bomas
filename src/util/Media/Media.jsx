@@ -22,11 +22,11 @@ export default class Media {
     }
 
     async deleteAlbum(albumName) {
-        // await MediaLibrary.
+        await MediaLibrary.deleteAlbumsAsync('');
     }
 
     async getAlbum(folderName = this.folderName) {
-
+        const album = await 
     }
 
     async createMedia(folderName = this.folderName) {
