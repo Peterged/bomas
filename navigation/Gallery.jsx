@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import * as FileSystem from "expo-file-system";
 import moment from "moment";
 import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet } from "react-native";
-import SlidingUpPanel from "rn-sliding-up-panel";
+import $ from 'jquery';
 
 import {
     ScrollView,
@@ -27,9 +26,9 @@ SplashScreen.preventAutoHideAsync();
 const InfoImage = require("~/assets/images/icons/info_icon.png");
 import Touchable from "../src/components/Touchable.jsx";
 import ImageTouchable from "../src/components/ImageTouchable.jsx";
-import ImageModal from "../src/components/ImageModal.jsx";
 import ImageNavigate from "../src/components/ImageNavigate.jsx";
 import { getStorage } from "../src/util/storage/saveAsyncStorage.jsx";
+import axios from "axios";
 const Images = require("../src/assets/data/image.json");
 
 const historyInformation = () => {
@@ -67,10 +66,20 @@ export default function Gallery({ navigation }) {
     const randomColors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
     const [recentImages, setRecentImages] = useState([]);
     const [images, setImages] = useState([]);
-    const [panelPosition, setPanelPosition] = useState(0);
+    const slidingUpPanelRef = useRef(null);
+    const [IP, setIP] = useState('');
 
     const windowWidth = useWindowDimensions().width - 40;
     const smallImageSize = Math.floor(windowWidth / 3);
+
+    useEffect(() => {
+        async function fetchStorage() {
+            let data = await getStorage('ip');
+            data = data ? JSON.parse(data) : '';
+            setIP(data);
+        }
+        fetchStorage();
+    }, []);
 
     const handleOnLayout = useCallback(async () => {
         if (isLoaded) {
@@ -81,12 +90,20 @@ export default function Gallery({ navigation }) {
     if (!isLoaded) {
         return null;
     }
+    const handleGetStorage = async (name) => {
+        let data = await getStorage('ip');
+        data = data ? JSON.parse(data) : '';
+        console.log(data);
+    }
+
+
 
     const customStyles = StyleSheet.create({
         smallImage: {
             height: smallImageSize - 2,
             width: smallImageSize - 2,
             resizeMode: "cover",
+            // objectFit: 'cover',
             backgroundColor: randomColors[Math.floor(Math.random() * (4 - 0) + 0)],
             margin: 1,
         },
@@ -150,9 +167,42 @@ export default function Gallery({ navigation }) {
                     scrollEnabled={true}
                 >
                     <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
-                        <ImageTouchable onPress={historyInformation} style={customStyles.smallImage} source={Images.image1} />
-                        <View style={customStyles.smallImage}></View>
-                        <View style={customStyles.smallImage}></View>
+                        <ImageNavigate source={Images.image1} style={customStyles.smallImage} targetPage={`image_view`} alt={`phone`} />
+                        <Touchable style={[customStyles.smallImage, { backgroundColor: '#00FF00' }]} onPress={async () => {
+
+                            axios.get(`http://${IP}/`, {
+                                params: {
+                                    data: 'turn180'
+                                }
+                            })
+                                .then((response) => {
+                                    console.log(response)
+                                })
+                                .catch((error) => {
+                                    console.error(error)
+                                })
+
+
+                        }}></Touchable>
+                        <Touchable style={[customStyles.smallImage, { backgroundColor: '#0000FF' }]} onPress={() => handleGetStorage('ip')}></Touchable>
+                        <Touchable style={[customStyles.smallImage, { backgroundColor: '#00FFFF' }]} onPress={async () => {
+                            console.log('sent get request');
+                            axios.get(`http://${IP}/`, {
+                                params: {
+                                    data: 'turn0'
+                                }
+                            })
+                                .then((response) => {
+                                    console.log(response)
+                                })
+                                .catch((error) => {
+                                    console.error(error)
+                                })
+
+
+
+
+                        }}></Touchable>
                         <View style={customStyles.smallImage}></View>
                         <View style={customStyles.smallImage}></View>
                         <View style={customStyles.smallImage}></View>
@@ -168,8 +218,8 @@ export default function Gallery({ navigation }) {
             </Touchable> */}
 
 
-            <StatusBar style="auto"></StatusBar>
-        </View>
+            <StatusBar style="auto" />
+        </View >
     );
 }
 

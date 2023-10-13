@@ -11,12 +11,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import InputWithChecking from "../src/components/InputWithChecking";
 import flashMessage from "../src/util/flashMessages";
+import { saveStorage, getStorage, scheduleStorageRemoval } from "../src/util/storage/saveAsyncStorage";
+import { useState } from "react";
 
 
 
 export default function InputIP({ navigation }) {
+    const [inputValue, setInputValue] = useState('');
     const handleSubmit = (pageName) => {
-        flashMessage('Successfully saved your ip!');
+        flashMessage('Successfully saved your ip!', 'success', 'bottom', true);
+        saveStorage('ip', inputValue);
         navigation.navigate(pageName);
     }
 
@@ -29,7 +33,8 @@ export default function InputIP({ navigation }) {
                 styleInput={styles.inputStyle}
                 styleButton={styles.buttonStyle}
                 buttonText={`SAVE`}
-                onSubmit={() => navigation.navigate('gallery')}
+                onChange={setInputValue}
+                onSubmit={() => handleSubmit('gallery')}
             />
             <StatusBar style="auto" />
         </View>

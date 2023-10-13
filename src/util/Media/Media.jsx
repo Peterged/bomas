@@ -26,7 +26,7 @@ export default class Media {
     }
 
     async getAlbum(folderName = this.folderName) {
-
+        
     }
 
     async createMedia(folderName = this.folderName) {
