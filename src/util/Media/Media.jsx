@@ -1,5 +1,7 @@
 import * as MediaLibrary from 'expo-media-library';
 
+const DEFAULT_ASSET_READ_LIMIT = 20;
+
 export default class Media {
     constructor(folderName) {
         this.folderName = folderName;
@@ -18,22 +20,27 @@ export default class Media {
     }
 
     async updateAlbum(albumName, newAlbumName) {
-        // await MediaLibrary.
+        await MediaLibrary.
     }
 
     async deleteAlbum(albumName) {
-        // await MediaLibrary.
-    }
-
-    async getAlbum(folderName = this.folderName) {
-        
-    }
-
-    async createMedia(folderName = this.folderName) {
 
     }
 
-    async updateMedia(folderName = this.folderName) {
+    async getAlbum(albumName) {
+        const album = await
+    }
+
+    async createAsset(assetName, data) {
+        await MediaLibrary.createAssetAsync();
+    }
+
+    /**
+     *
+     * @param {*} assetName
+     * @param {*} newData
+     */
+    async updateAsset(assetName, newData) {
 
     }
 

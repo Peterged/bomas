@@ -56,6 +56,8 @@ export default function App() {
 
   }, []);
 
+  
+
   const renderStackScreen = () => {
     if (isThereImages) {
       return (
