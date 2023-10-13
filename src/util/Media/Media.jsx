@@ -20,7 +20,7 @@ export default class Media {
     }
 
     async updateAlbum(albumName, newAlbumName) {
-        await MediaLibrary.
+        // await MediaLibrary.
     }
 
     async deleteAlbum(albumName) {
@@ -28,7 +28,7 @@ export default class Media {
     }
 
     async getAlbum(albumName) {
-        const album = await
+        // const album = await
     }
 
     async createAsset(assetName, data) {
