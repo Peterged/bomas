@@ -4,7 +4,9 @@ import { AppState } from "react-native";
 
 async function saveStorage(name, data) {
     try {
-        await AsyncStorage.setItem(name, data);
+        await AsyncStorage.setItem(name, JSON.stringify(data)).then(() => {
+            console.log('data saved!');
+        });
     } catch (error) {
         console.error(error);
     }
@@ -12,7 +14,15 @@ async function saveStorage(name, data) {
 
 async function getStorage(name) {
     try {
-        const data = await AsyncStorage.getItem(name).value;
+        let data;
+        await AsyncStorage.getItem(name).then((result) => {
+            if(result) {
+                console.log('storage found!') ;
+                data = result;
+            } else {
+                console.log('Storage not found!');
+            }
+        })
         return data;
     } catch (error) {
         console.error(error);
@@ -33,7 +43,7 @@ async function scheduleStorageRemoval(name, time) {
 
     const removalTime = new Date(now.getTime() + time);
 
-    setTimeout(removalTime, removeStorage   (name))
+    setTimeout(removalTime, removeStorage(name))
 }
 
 

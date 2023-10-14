@@ -27,8 +27,8 @@ export default class Media {
         
     }
 
-    async getAlbum(albumName) {
-        const album = await 
+    async getAlbum(folderName = this.folderName) {
+        
     }
 
     async createAsset(assetName, data) {

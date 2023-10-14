@@ -109,7 +109,7 @@ export default function ImageView() {
 
             {/* Share, Edit and Delete Button  */}
 
-            <StatusBar style="auto" />
+            <StatusBar style="auto" backgroundColor='' hidden />
         </SafeAreaProvider>
     );
 };
@@ -117,7 +117,7 @@ export default function ImageView() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 40,
+
         backgroundColor: Color.black,
         // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
 
