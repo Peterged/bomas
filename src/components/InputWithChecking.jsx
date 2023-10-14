@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FlashMessage } from 'react-native-flash-message';
 
 
-const InputWithChecking = ({ regularExpression, onSubmit, onChange, styleInput, styleButton, styleView, buttonText, buttonDisabledStyle = {} }) => {
+const InputWithChecking = ({ placeholder, regularExpression, onSubmit, onChange, styleInput, styleButton, styleView, buttonText, buttonDisabledStyle = {} }) => {
   const [regex, setRegex] = useState('');
   const [disabledStyle, setDisabledStyle] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
@@ -30,7 +30,7 @@ const InputWithChecking = ({ regularExpression, onSubmit, onChange, styleInput, 
   return (
     <View style={{ flex: 1, margin: 0, marginTop: 15 }}>
       <TextInput
-        placeholder="e.g. 171.123.159.25"
+        placeholder={placeholder}
         value={regex}
         onChangeText={(regex) => {
           setRegex(regex)

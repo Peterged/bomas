@@ -29,6 +29,7 @@ export default function InputIP({ navigation }) {
             <Text style={{ fontSize: 16, marginBottom: 5, fontWeight: 'bold' }}>IP Address</Text>
             <InputWithChecking
                 regularExpression={/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/}
+                placeholder={`e.g. 171.123.159.25`}
                 styleView={styles.viewStyle}
                 styleInput={styles.inputStyle}
                 styleButton={styles.buttonStyle}
