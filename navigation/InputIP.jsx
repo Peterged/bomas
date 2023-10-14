@@ -18,6 +18,14 @@ import { useState } from "react";
 
 export default function InputIP({ navigation }) {
     const [inputValue, setInputValue] = useState('');
+    const [hasImage, setHasImage] = useState('');
+
+
+    useEffect(() => {
+        await 
+    }, []);
+   
+    
     const handleSubmit = (pageName) => {
         flashMessage('Successfully saved your ip!', 'success', 'bottom', true);
         saveStorage('ip', inputValue);

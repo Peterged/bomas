@@ -81,6 +81,10 @@ export default function Gallery({ navigation }) {
         fetchStorage();
     }, []);
 
+    useEffect(() => {
+
+    }, [])
+
     const handleOnLayout = useCallback(async () => {
         if (isLoaded) {
             await SplashScreen.hideAsync(); // hide the splashscreen
